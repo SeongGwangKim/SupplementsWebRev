@@ -1,0 +1,89 @@
+server:
+  port: 8384
+
+
+spring:
+
+  # ViewResolver
+  mvc:
+    view:
+      #      static-path-pattern: /resources/
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  servlet:
+    jsp:
+      init-parameters:
+        development: true
+
+  # h2
+  h2:
+    console:
+      enabled: true
+      path: /console
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/test
+    username: oliver
+    password: 3083
+
+  # jpa
+  jpa:
+    properties:
+      hibernate:
+        # hibernate가 실행하는 모든 sql문을 콘솔로 출력
+        show_sql: true
+        # sql문을 가독성있게 출력
+        format_sql: true
+        # sql 이외 추가적인 정보 출력
+        use_sql_comments: true
+        ddl-auto: create
+        generate-ddl: true
+
+# sql문 중 물음표로 표기되는 값을 출력
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+
+  # security, oauth
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 336933391284-s30eosc9ntk57o0jsvhj9kv55gnopfsi.apps.googleusercontent.com
+            client-secret: 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
+            redirectUri: http://localhost:8384/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+          kakao:
+            authorization-grant-type: authorization_code
+            client-id: 5c2d0f358423371eec07abdbc5143497
+            client-secret: wYcGDUpe0nKj3TubMCKZmBX5Ed9SdcI1
+            redirect-uri: http://localhost:8384/login/oauth2/code/kakao
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            client-authentication-method: POST
+            client-name: Kakao
+
+        provider:
+
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+  profiles:
+    include: oauth
+
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SupplementsWeb.com.mapper.GuestbookMapper">
+
+    <select id="guestbookCount" resultType="int">
+        SELECT count(boardId) AS cnt FROM tbl_board;
+    </select>
+
+    <select id="getList" resultType="SupplementsWeb.com.domain.Guestbook">
+        SELECT
+         *
+        FROM tbl_board;
+    </select>
+
+    <select id="getGuestbook" parameterType="Long" resultType="SupplementsWeb.com.domain.Guestbook">
+        SELECT
+         *
+        FROM tbl_board where boardId=#{boardId};
+    </select>
+
+    <insert id="uploadGuestbook" parameterType="SupplementsWeb.com.domain.Guestbook">
+        INSERT INTO tbl_board (name, content)
+        VALUES
+        (#{name}, #{content})
+    </insert>
+
+    <update id="updateGuestbook" parameterType="SupplementsWeb.com.domain.Guestbook">
+        UPDATE tbl_board
+        SET content=#{content}, updatedate=now()
+        WHERE boardId=#{boardId};
+    </update>
+
+    <delete id="deleteGuestbook" parameterType="Long">
+        DELETE
+        FROM tbl_board
+        WHERE boardId=#{boardId};
+    </delete>
+</mapper>
